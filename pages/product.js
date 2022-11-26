@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import Styles from '../styles/products.module.css'
 
@@ -23,11 +24,13 @@ const Products = (props) => {
           {productData.map((item) => (
             <div className="col-md-3">
               <div className="mb-4 p-3 ">
+                <Link href={`/products/${item.id}`}>
                 <img
                   src={item.image}
                   alt=".."
                   className={Styles.img_responsive}
                 />
+                </Link>
                 <h4 className="fs-6">{item.title}</h4>
                 <p className={Styles.elipsis}>{item.description}</p>
                 <h6>Rs. {item.price}</h6>
