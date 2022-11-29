@@ -29,6 +29,7 @@ export const getStaticPaths = async () => {
 
 const ProductByID = ({res}) => {
   return (
+    <>
     <div>
       <h2>Batches : {res.title}</h2>
       <h2>Batches : {res.price}</h2>
@@ -37,6 +38,7 @@ const ProductByID = ({res}) => {
         <img src={res.image} />
       </h2>
     </div>
+    </>
   )
 }
 

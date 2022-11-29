@@ -1,7 +1,9 @@
 import React from 'react'
+import styles from "../styles/Login.module.css";
 
 const ErrorPage = () => {
   return (
+    <div className={styles.bodycolor}>
     <div className="container">
     <div className="row">
         <div className="col-md-12">
@@ -20,7 +22,7 @@ const ErrorPage = () => {
             </div>
         </div>
     </div>
-</div>
+</div></div>
   )
 }
 

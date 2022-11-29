@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Footer from "../common/Footer";
 import Styles from '../styles/products.module.css'
 
 export const getStaticProps = async () => {
@@ -39,6 +40,7 @@ const Products = (props) => {
           ))}
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
