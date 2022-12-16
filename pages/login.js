@@ -1,11 +1,62 @@
-import React from "react";
+import React, { useState } from 'react';
 import styles from "../styles/Login.module.css";
 import Image from "next/image";
+import {useRouter} from 'next/router';
+import axios from 'axios'
 
-const Login = () => {
+export const getStaticProps = () => {
+  let url = "http://localhost:3000/";
+  return {
+      props: {
+          baseurl: url
+      }
+  }
+}
+
+const Login = (props) => {
+  const [formdata, setFormdata] = useState({});
+    const [submitStatus, setSubmitStatus] = useState(false);
+    const router = useRouter();
+    const {baseurl} = props;
+    console.log('baseurl', baseurl);
+
+    const loginFn = async () => {
+        console.log('formdata', formdata, "http://localhost:3000/");
+        const url =  baseurl + 'api/users/login';
+        try{
+            const response = await axios.post(url, formdata);
+            console.log(response.data);
+            if(response.data.userid) {
+                localStorage.setItem('loginStatus', true);
+                localStorage.setItem('username', response.data.email);
+                localStorage.setItem('name', response.data.name)
+                router.push('/product');
+            }
+        }
+        catch{
+            setSubmitStatus(true);
+        }
+    }
+
+    const handleChange = (e) => {
+        console.log(e.target.name, e.target.value);
+        let tempObj = {};
+        tempObj[e.target.name] = e.target.value;
+        setFormdata({...formdata, ...tempObj});
+    }
   return (
     <>
-      <div className={styles.bodycolor}>
+    {submitStatus && (
+            <div class="alert alert-danger" role="alert">
+                This is a danger alert—check it out!
+                </div>
+        )}
+        Email: <input type="email" name="email" onChange={handleChange}/>
+        <br></br>
+        Password: <input type="password" name="password" onChange={handleChange}/>
+        <br></br>
+        <button onClick={loginFn}>Submit</button>
+      {/* <div className={styles.bodycolor}>
         <div className={styles.center}>
             <Image src="/altudologo.png" className={`${styles.logo} img-thumbnail`} alt="Logo" width={150} height={70}></Image>
             <h2>Login</h2>
@@ -74,7 +125,7 @@ const Login = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
